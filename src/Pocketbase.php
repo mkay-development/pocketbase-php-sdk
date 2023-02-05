@@ -1,7 +1,7 @@
 <?php
 class Pocketbase
 {
-    private string|bool $response;
+    private string $response;
     private string $url;
 
     public function __construct(string $url)

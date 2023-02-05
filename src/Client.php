@@ -11,6 +11,7 @@ class Client
     {
         $this->response = '{}';
         $this->url = $url;
+        $this->users = [];
     }
 
     public function collection(string $collection, int $page = 1)
@@ -18,10 +19,9 @@ class Client
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url."/api/collections/".$collection."/records?page=".$page);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $this->response = curl_exec($ch);
+        $collection = new Collection(curl_exec($ch));
         curl_close($ch);
 
-        return json_decode($this->response, JSON_FORCE_OBJECT);
+        return json_decode($collection, JSON_FORCE_OBJECT);
     }
-
 }

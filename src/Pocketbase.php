@@ -1,6 +1,7 @@
 <?php
 
-namepspace \pb;
+namespace Pb;
+
 class Client
 {
     private string $response;

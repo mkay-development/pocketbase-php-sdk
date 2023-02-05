@@ -8,7 +8,9 @@
     }
   ],
   "autoload": {
-    "files": [ "src/Client.php"]
+    "classmap": [
+      "src/Client.php"
+    ]
   },
   "require": {
     "php": "^8.1|^8.2",

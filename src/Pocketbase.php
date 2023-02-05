@@ -1,5 +1,7 @@
 <?php
-class Pocketbase
+
+namepspace \pb;
+class Client
 {
     private string $response;
     private string $url;

@@ -9,7 +9,8 @@
   ],
   "autoload": {
     "classmap": [
-      "src/Client.php"
+      "src/Client.php",
+      "src/Collection.php"
     ]
   },
   "require": {

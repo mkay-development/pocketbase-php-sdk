@@ -2,26 +2,29 @@
 
 namespace Pb;
 
+use UsersCollection;
+
 class Client
 {
     private string $response;
     private string $url;
+    private string $route;
 
     public function __construct(string $url)
     {
         $this->response = '{}';
         $this->url = $url;
         $this->users = [];
+
     }
 
-    public function collection(string $collection, int $page = 1)
+    public function users()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url."/api/collections/".$collection."/records?page=".$page);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $collection = new Collection(curl_exec($ch));
-        curl_close($ch);
+        return new UsersCollection($this->url, 'records');
+    }
 
-        return json_decode($collection, JSON_FORCE_OBJECT);
+    public function collection($url,string $collection, int $page = 1)
+    {
+        return new Collection($this->url ,$collection);
     }
 }

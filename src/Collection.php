@@ -6,6 +6,7 @@ class Collection
 {
     private string $collection;
     private string $url;
+    private static string $token = '';
 
 
     public function __construct(string $url, string $collection)
@@ -28,11 +29,44 @@ class Collection
 
     }
 
-    public function create(array  $bodyParams = [], array $queryParams = []){
+    public function  create(array $bodyParams = [],array $queryParams = []){
+        $ch = curl_init();
 
+        if(self::$token != ''){
+            $headers = array(
+                'Content-Type:application/json',
+                'Authorization: '.self::$token
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
+
+        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/".$this->collection."/records");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($bodyParams));
+        $output = curl_exec($ch);
+        var_dump($output);
+        curl_close($ch);
     }
-    public function  update(string $recordId, array $bodyParams = [],array $queryParams = []){
 
+    public function  update(string $recordId, array $bodyParams = [],array $queryParams = []){
+        $ch = curl_init();
+
+        if(self::$token != ''){
+            $headers = array(
+                'Content-Type:application/json',
+                'Authorization: '.self::$token
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
+
+        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/".$this->collection."/records/".$recordId);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($bodyParams));
+        $output = curl_exec($ch);
+        var_dump($output);
+        curl_close($ch);
     }
     public function delete(string $recordId, array $queryParams = []){
 
@@ -42,9 +76,20 @@ class Collection
 
     }
 
-    public function authWithPassword()
+    public function authWithPassword(string $email, string $password)
     {
-        $data = json_decode($this->json, JSON_FORCE_OBJECT);
-        var_dump($data);
+        $ch = curl_init();
+
+        $bodyParams['identity'] = $email;
+        $bodyParams['password'] = $password;
+
+        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/admins/auth-with-password");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyParams);
+        $output = curl_exec($ch);
+        $json = json_decode($output, JSON_FORCE_OBJECT);
+        self::$token = $json['token'];
+        curl_close($ch);
     }
 }

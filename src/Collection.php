@@ -18,7 +18,7 @@ class Collection
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/".$this->collection."/records");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = new Collection(curl_exec($ch));
+        $output = curl_exec($ch);
         curl_close($ch);
 
         return json_decode($output, JSON_FORCE_OBJECT);

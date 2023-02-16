@@ -19,6 +19,13 @@ class Collection
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/".$this->collection."/records");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        if(self::$token != ''){
+            $headers = array(
+                'Content-Type:application/json',
+                'Authorization: '.self::$token
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
         $output = curl_exec($ch);
         curl_close($ch);
 

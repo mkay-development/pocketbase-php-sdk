@@ -76,14 +76,28 @@ class Collection
         curl_close($ch);
     }
     public function delete(string $recordId, array $queryParams = []){
+        $ch = curl_init();
 
+        if(self::$token != ''){
+            $headers = array(
+                'Content-Type:application/json',
+                'Authorization: '.self::$token
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
+
+        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/".$this->collection."/records/".$recordId);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        $output = curl_exec($ch);
+        curl_close($ch);
     }
 
     public function getOne(string $recordId, array $queryParams = []){
 
     }
 
-    public function authWithPassword(string $email, string $password)
+    public function authAsAdmin(string $email, string $password)
     {
         $ch = curl_init();
 

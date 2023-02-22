@@ -23,7 +23,7 @@ class Client
         return new UsersCollection($this->url, 'records');
     }
 
-    public function collection($url,string $collection, int $page = 1)
+    public function collection(string $collection)
     {
         return new Collection($this->url ,$collection);
     }

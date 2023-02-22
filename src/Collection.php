@@ -40,7 +40,8 @@ class Collection
     public function getFullList(int $batch = 200, array $queryParams = [])
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/" . $this->collection . "/records");
+        $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
+        curl_setopt($ch, CURLOPT_URL, $this->url . "/api/collections/" . $this->collection . "/records?".$getParams);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         if (self::$token != '') {
             $headers = array(

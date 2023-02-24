@@ -4,6 +4,10 @@
 ##### This Repository are in active Development
 ***
 
+``` bash
+composer require mkay-development/pocketbase-php-sdk
+```
+
 ``` php
 // Example init and use
 use \Pb\Client as pb;

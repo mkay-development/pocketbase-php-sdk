@@ -20,7 +20,7 @@ class Collection
     /**
      * @var string
      */
-    public static string $token = '';
+    private static string $token = '';
 
     /**
      * @param string $url
@@ -31,7 +31,6 @@ class Collection
         $this->url = $url;
         $this->collection = $collection;
     }
-
 
     /**
      * @param int $batch

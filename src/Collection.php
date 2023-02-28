@@ -35,9 +35,9 @@ class Collection
     /**
      * @param int $batch
      * @param array $queryParams
-     * @return mixed
+     * @return array
      */
-    public function getFullList(int $batch = 200, array $queryParams = [])
+    public function getFullList(int $batch = 200, array $queryParams = []): array
     {
         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
         $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
@@ -50,7 +50,7 @@ class Collection
      * @param array $queryParams
      * @return array
      */
-    public function getFirstListItem(string $filter, array $queryParams = [])
+    public function getFirstListItem(string $filter, array $queryParams = []): array
     {
         $queryParams['perPage'] = 1;
         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
@@ -63,7 +63,7 @@ class Collection
      * @param array $queryParams
      * @return void
      */
-    public function create(array $bodyParams = [], array $queryParams = [])
+    public function create(array $bodyParams = [], array $queryParams = []): void
     {
         $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records", 'POST', json_encode($bodyParams));
     }
@@ -74,7 +74,7 @@ class Collection
      * @param array $queryParams
      * @return void
      */
-    public function update(string $recordId, array $bodyParams = [], array $queryParams = [])
+    public function update(string $recordId, array $bodyParams = [], array $queryParams = []): void
     {
         // Todo bodyParams equals json, currently workaround
         $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records/" . $recordId, 'PATCH', json_encode($bodyParams));
@@ -85,7 +85,7 @@ class Collection
      * @param array $queryParams
      * @return void
      */
-    public function delete(string $recordId, array $queryParams = [])
+    public function delete(string $recordId, array $queryParams = []): void
     {
         $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records/" . $recordId, 'DELETE');
     }
@@ -96,7 +96,7 @@ class Collection
      * @param string $method
      * @return bool|string
      */
-    public function doRequest(string $url, string $method, $bodyParams = [])
+    public function doRequest(string $url, string $method, $bodyParams = []): string
     {
         $ch = curl_init();
 
@@ -126,7 +126,7 @@ class Collection
      * @param array $queryParams
      * @return mixed
      */
-    public function getOne(string $recordId, array $queryParams = [])
+    public function getOne(string $recordId, array $queryParams = []): array
     {
         $output = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records/" . $recordId, 'GET');
         return json_decode($output, JSON_FORCE_OBJECT);
@@ -137,7 +137,7 @@ class Collection
      * @param string $password
      * @return void
      */
-    public function authAsAdmin(string $email, string $password)
+    public function authAsAdmin(string $email, string $password): void
     {
         $bodyParams['identity'] = $email;
         $bodyParams['password'] = $password;

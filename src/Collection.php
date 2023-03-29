@@ -33,12 +33,27 @@ class Collection
     }
 
     /**
+     * @param int $start
+     * @param int $end
+     * @param array $queryParams
+     * @return array
+     */
+    public function getList(int $start = 1, int $end = 50, array $queryParams = []): array
+    {
+        $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
+        $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
+
+        return json_decode($response, JSON_FORCE_OBJECT);
+    }
+
+    /**
      * @param int $batch
      * @param array $queryParams
      * @return array
      */
     public function getFullList(int $batch = 200, array $queryParams = []): array
     {
+        $queryParams = [... $queryParams, ['perPage' => $batch]];
         $getParams = !empty($queryParams) ? http_build_query($queryParams) : "";
         $response = $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records?" . $getParams, 'GET');
 

@@ -78,9 +78,9 @@ class Collection
      * @param array $queryParams
      * @return void
      */
-    public function create(array $bodyParams = [], array $queryParams = []): void
+    public function create(array $bodyParams = [], array $queryParams = []): string
     {
-        $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records", 'POST', json_encode($bodyParams));
+        return $this->doRequest($this->url . "/api/collections/" . $this->collection . "/records", 'POST', json_encode($bodyParams));
     }
 
     /**

@@ -15,4 +15,9 @@ class Client
     {
         return new Collection($this->url ,$collection);
     }
+
+    public function settings(): Settings
+    {
+        return new Settings($this->url);
+    }
 }

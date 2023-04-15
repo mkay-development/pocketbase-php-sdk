@@ -47,6 +47,19 @@ class Collection
     }
 
     /**
+     * @param string $email
+     * @param string $password
+     * @return void
+     */
+    public function authAsUser(string $email, string $password)
+    {
+        $result = $this->doRequest($this->url . "/api/collections/users/auth-with-password", 'POST', ['identity' => $email, 'password' => $password]);
+        if (!empty($result['token'])) {
+            self::$token = $result['token'];
+        }
+    }
+
+    /**
      * @param int $batch
      * @param array $queryParams
      * @return array

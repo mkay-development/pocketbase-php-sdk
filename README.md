@@ -12,7 +12,7 @@ composer require mkay-development/pocketbase-php-sdk
 // Example init and use
 use \Pb\Client as pb;
 $pb = new pb('https://backend-shop.mkay.dev');
-var_dump($pb->collection('countries'));
+var_dump($pb->collection('countries')->getList());
 ```
 
 ***

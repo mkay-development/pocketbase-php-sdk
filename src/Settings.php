@@ -26,6 +26,14 @@ class Settings
         $this->url = $url;
     }
 
+    public function authAsAdmin(string $email, string $password): void
+    {
+        $bodyParams['identity'] = $email;
+        $bodyParams['password'] = $password;
+        $output = $this->doRequest($this->url . "/api/admins/auth-with-password", 'POST', $bodyParams);
+        self::$token = json_decode($output, true)['token'];
+    }
+
     /**
      * @param string $recordId
      * @param string $url
@@ -60,7 +68,12 @@ class Settings
     /**
      * @return void
      */
-    public function getAll(){
+    public function getAll():array
+    {
+        return json_decode($this->doRequest($this->url . '/api/settings', 'GET', []), true);
+    }
 
+    public function update($bodyParam):array{
+        return json_decode($this->doRequest($this->url . '/api/settings', 'PATCH', json_encode($bodyParam)), true);
     }
 }
